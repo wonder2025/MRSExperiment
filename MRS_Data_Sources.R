@@ -96,25 +96,25 @@ rxClose(claimsDs)
 # Using an Xdf Data Source with biglm
 install.packages("biglm")
 library("biglm")
-  biglmxdf <- function(dataSource, formula)
-  {   
-    moreData <- TRUE
-    df <- rxReadNext(dataSource)
-    biglmRes <- biglm(formula, df)  
-    while (moreData)
+biglmxdf <- function(dataSource, formula)
+{   
+  moreData <- TRUE
+  df <- rxReadNext(dataSource)
+  biglmRes <- biglm(formula, df)  
+  while (moreData)
+  {
+    df <- rxReadNext(dataSource)    
+    if (length(df) != 0)
     {
-      df <- rxReadNext(dataSource)    
-      if (length(df) != 0)
-      {
-        biglmRes <- update(biglmRes, df)
-      }
-      else
-      {
-        moreData <- FALSE
-      }
-    }                           
-    return(biglmRes)            
-  }
+      biglmRes <- update(biglmRes, df)
+    }
+    else
+    {
+      moreData <- FALSE
+    }
+  }                           
+  return(biglmRes)            
+}
   
   #create a data source
   airData <- file.path(rxGetOption("sampleDataDir"), "AirlineDemoSmall.xdf")
