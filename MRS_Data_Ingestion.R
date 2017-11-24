@@ -362,7 +362,7 @@ rxImport(inData = airlineCsv,
 # Check the results. ArrDelay should be numeric or integer, CRSDepTime renamed to
 # DepTime24, and DayOfWeek should be a factor with Sunday as its first level.
 rxGetVarInfo(airlineXdf)
-rxGetInfo(airlineXdf,numRows = 10000)
+rxGetInfo(airlineXdf,numRows = 10)
 
 
 ################################################################################
@@ -376,7 +376,7 @@ outfile <- file.path(XdfDir, "claimsXform.xdf")
 #For example, we could create a new variable, logcost, by taking the log of the existing cost variable as follows:
 claimsDS <-rxImport(inFile, outFile = outfile, transforms=list(logcost=log(cost)))
 rxGetInfo(claimsDS, getVarInfo=TRUE)
-
+rxGetInfo(claimsDS, numRows = TRUE)
 ################################################################################
 # Exercise 9: Change compression level
 ################################################################################
@@ -385,7 +385,11 @@ rxGetInfo(claimsDS, getVarInfo=TRUE)
 # The higher the value, the greater the amount of compression - resulting in smaller files but a longer time to create them.
 # the default is: rxGetOption("xdfCompressionLevel")
 # try rxImport with different values
-
+airlineXdfComp <- file.path(XdfDir,"airlineComp.Xdf")
+rxImport(inData = airlineCsv,
+         outFile = airlineXdfComp,
+         xdfCompressionLevel = 9,
+         overwrite=TRUE)
 
 
 ################################################################################
@@ -411,3 +415,4 @@ xdfFileSpss <- file.path(XdfDir, "claimsSpss.xdf")
 claimsSpss <- rxImport(inData = inFileSpss, outFile = xdfFileSpss)
 rxGetInfo(claimsSpss, getVarInfo=TRUE)
 
+?RxTextData
