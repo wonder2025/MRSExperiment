@@ -96,7 +96,7 @@ xdfInfo$numBlocks
 xdfInfo$compressionType
 xdfInfo$rowsPerBlock
 xdfInfo$varInfo
-
+class(xdfInfo)
 #summary
 rxSummary(~ ., data = xdfFileDS)
 
@@ -122,7 +122,7 @@ rxSummary(~ creditScore + year, data = xdfFileDS)
 # c("example", "character", "vector")
 
 xdfSubset <- file.path(XdfDir, "xdfSubset.xdf")
-
+rxGetInfo(xdfSubset,numRows = 10)
 rxImport(inData = csvFile, 
          outFile = xdfSubset,
          varsToKeep = c("creditScore", "houseAge", "default"),
